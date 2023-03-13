@@ -11,9 +11,9 @@ struct RunChargdIntent: AppIntent {
     static var title: LocalizedStringResource = "Run Chargd"
     static var description = IntentDescription("Chargd will run when you plug in or out your charger.")
     
-    func perform() async throws -> some ProvidesDialog {
+    func perform() async throws -> some ReturnsValue {
         postUpdate()
 
-        return .result(dialog: IntentDialog(stringLiteral: "wah"))
+        return .result(value: "")
     }
 }

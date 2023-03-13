@@ -5,28 +5,75 @@
 
 import SwiftUI
 
+
 @main
 struct chargdApp: App {
+        
+    @AppStorage("username") var username = "Anonymous"
+
+    init() {
+        UIDevice.current.isBatteryMonitoringEnabled = true
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if (username == "Anonymous") {
+                Onboarding()
+            }
+            else {
+                ContentView()
+            }
         }
     }
+    
+    
+
+}
+//
+//func deleteOldUsername(_: oldUsername) {
+//
+//}
+
+func postUpdate() {
+    @AppStorage("username") var username = "Anonymous"
+    
+    let currentTime = Int(NSDate().timeIntervalSince1970)
+    
+    let battery_level = (UIDevice.current.batteryLevel) * 100
+    
+    let plugged_state = UIDevice.current.batteryState
+    var is_plugin = true
+    
+    switch plugged_state {
+        case UIDevice.BatteryState.charging:
+            is_plugin = true
+        case UIDevice.BatteryState.full:
+            is_plugin = true
+    
+        default:
+            is_plugin = false
+
+    }
+        
+    
+    let parameters: NSDictionary = [
+        "username": username,
+        "battery": String(battery_level),
+        "is_plugin": String(is_plugin),
+        "timestamp": String(currentTime)
+    ]
+    
+    let url_string = "https://chargd.bucketfish.me/battery"
+    
+    apiPOST(parameters: parameters, url_string: url_string)
 }
 
-func postUpdate(){
-    let url = URL(string: "https://chargd.bucketfish.me/battery")!
+
+
+func apiPOST(parameters: NSDictionary, url_string: String) {
+    let url = URL(string:url_string)!
     var request = URLRequest(url: url)
     
-//    var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-
-    let parameters: NSDictionary = [
-        "username": "bucketfish_test",
-        "battery": "100",
-        "is_plugin": "true",
-        "timestamp": "test_data"
-    ]
-   
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
 
@@ -41,15 +88,14 @@ func postUpdate(){
             // Check for Error
             if let error = error {
                 print("Error took place \(error)")
-                return
+                
             }
      
             // Convert HTTP Response Data to a String
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
                 print("Response data string:\n \(dataString)")
+                
             }
     }
     task.resume()
-    
-
 }

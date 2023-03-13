@@ -15,6 +15,7 @@
 		4C12E2F229BF22CF00DCD144 /* chargdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C12E2F129BF22CF00DCD144 /* chargdUITests.swift */; };
 		4C12E2F429BF22CF00DCD144 /* chargdUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C12E2F329BF22CF00DCD144 /* chargdUITestsLaunchTests.swift */; };
 		4C12E30129BF233800DCD144 /* chargdIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C12E30029BF233800DCD144 /* chargdIntents.swift */; };
+		4C67097A29BF3F2C00056C70 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67097929BF3F2C00056C70 /* Onboarding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		4C12E2F129BF22CF00DCD144 /* chargdUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chargdUITests.swift; sourceTree = "<group>"; };
 		4C12E2F329BF22CF00DCD144 /* chargdUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chargdUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4C12E30029BF233800DCD144 /* chargdIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chargdIntents.swift; sourceTree = "<group>"; };
+		4C67097929BF3F2C00056C70 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				4C12E2D529BF22CE00DCD144 /* chargdApp.swift */,
+				4C67097929BF3F2C00056C70 /* Onboarding.swift */,
 				4C12E2D729BF22CE00DCD144 /* ContentView.swift */,
 				4C12E2D929BF22CF00DCD144 /* Assets.xcassets */,
 				4C12E2DB29BF22CF00DCD144 /* chargd.entitlements */,
@@ -264,6 +267,7 @@
 			files = (
 				4C12E30129BF233800DCD144 /* chargdIntents.swift in Sources */,
 				4C12E2D829BF22CE00DCD144 /* ContentView.swift in Sources */,
+				4C67097A29BF3F2C00056C70 /* Onboarding.swift in Sources */,
 				4C12E2D629BF22CE00DCD144 /* chargdApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

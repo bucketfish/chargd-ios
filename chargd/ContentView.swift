@@ -7,29 +7,33 @@
 
 import SwiftUI
 
+let defaults = UserDefaults.standard
+
 struct ContentView: View {
+    
+    @AppStorage("username") var username = "Anonymous"
+    
     var body: some View {
         
         ZStack{
             VStack {
             
-                Text("Welcome to Chargd.")
+                Text("some content screen idk.")
                     .font(.title)
-                Text("A new way to see your friends.")
+                Text("whoaaaa. you're logged in!")
             
             }
             
             VStack (){
-                Button("ok whatever let's go") {
+                Button("test post an update!") {
+                    print(username)
                     postUpdate()
                 }
             }.frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .bottom)
-            
         }
-        
         
        
     }
