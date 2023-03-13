@@ -9,13 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        ZStack{
+            VStack {
+            
+                Text("Welcome to Chargd.")
+                    .font(.title)
+                Text("A new way to see your friends.")
+            
+            }
+            
+            VStack (){
+                Button("ok whatever let's go") {
+                    postUpdate()
+                }
+            }.frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .bottom)
+            
         }
-        .padding()
+        
+        
+       
     }
 }
 
