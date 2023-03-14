@@ -12,8 +12,8 @@ struct RunChargdIntent: AppIntent {
     static var description = IntentDescription("Chargd will run when you plug in or out your charger.")
     
     func perform() async throws -> some ReturnsValue {
+        sendCaptionNotif(is_plugin: getPluggedState())
         postUpdate()
-
         return .result(value: "")
     }
 }

@@ -18,7 +18,7 @@ struct Onboarding: View {
         ZStack{
             VStack {
                 Text("Welcome to Chargd.")
-                    .font(.title)
+                    .font(.largeTitle)
                 Text("A new way to see your friends (??)")
                 
                 
