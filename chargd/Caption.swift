@@ -45,6 +45,9 @@ struct Caption: View {
             
             
         }.padding([.leading, .trailing])
+            .onAppear {
+                is_plugin = getPluggedState()
+            }
         
        
         
