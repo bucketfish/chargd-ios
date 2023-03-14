@@ -14,6 +14,9 @@ let defaults = UserDefaults.standard
 struct ContentView: View {
     
     @AppStorage("username") var username = "Anonymous"
+    @State var update_feed = true
+    @State var feed: [String: User]
+    @State var feed_list: [String] = []
     
     var body: some View {
         
@@ -21,14 +24,44 @@ struct ContentView: View {
             VStack (spacing: 20) {
             
                 Group {
-                    Text("your username is ") + Text(username).bold() + Text(".")
+                    Text("hello, ") + Text(username).bold()
                 }
                 .font(.largeTitle)
                 .multilineTextAlignment(.center)
                 
+                Button("refresh feed") {
+                    apiGET { results in
+                        if let fetchedData = results {
+                            feed = fetchedData
+                            feed_list = Array(feed.keys)
+                            print(feed_list)
+                        }
+                    }
+                }
                 
-                Text("whoaaaa. you're logged in! try plugging in your phone.")
-                    .multilineTextAlignment(.center)
+                VStack (spacing: 20){
+                    ForEach(feed_list, id: \.self) {feedItem in
+                        
+                        VStack{
+                            Divider()
+
+                            Text(feed[feedItem]?.timestamp ?? "")
+                           
+                            Group {
+                                Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
+                            }
+                            Text((feed[feedItem]?.battery ?? "") + "%")
+                                .font(.title)
+//
+                            Text(feed[feedItem]?.caption ?? "")
+                            
+                            
+//                            Text(feedItem)
+                        }
+                        
+
+                    }
+                }
             
             }
             
@@ -37,13 +70,7 @@ struct ContentView: View {
                     requestNotifPerms()
                 }
                 
-//                Button("test send a caption notif!") {
-//                    sendCaptionNotif(is_plugin: true)
-//                }
-//                Button("test post a caption!") {
-//                    postCaption(caption: "test caption")
-//                }
-            
+
             }.frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
@@ -57,6 +84,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1234", caption: "test caption")])
     }
 }

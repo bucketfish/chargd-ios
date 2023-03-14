@@ -6,8 +6,10 @@
 import SwiftUI
 
 var inForeground = true
+//var feed: [String: User] = [:]
 
 // MARK: main
+
 @main
 struct chargdApp: App {
     
@@ -32,7 +34,7 @@ struct chargdApp: App {
                 Caption()
             }
             else {
-                ContentView()
+                ContentView(feed: [:])
             }
         }
         .onChange(of: scenePhase) { phase in
@@ -94,9 +96,43 @@ func requestNotifPerms(){
     }
 }
 
+// MARK: api get calls
 
 
-// MARK: api calls
+struct User: Decodable {
+    let battery: String
+    let is_plugin: String
+    let timestamp: String
+    let caption: String
+}
+
+
+func apiGET(completion: @escaping ([String: User]?) -> Void) {
+    let url = URL(string:"https://chargd.bucketfish.me/battery")!
+    
+    URLSession.shared.dataTask(with: url){
+        data, response, error in
+        
+        let decoder = JSONDecoder()
+        
+        if let data = data{
+            do{
+                let data = try decoder.decode([String: User].self, from: data)
+                completion(data)
+            
+            }catch{
+                print(error)
+                completion([:])
+            }
+        }
+    }.resume()
+    
+
+}
+
+
+
+// MARK: api post calls
 
 //
 //func deleteOldUsername(_: oldUsername) {
@@ -190,3 +226,5 @@ func getPluggedState() -> Bool {
         
     return is_plugin
 }
+
+
