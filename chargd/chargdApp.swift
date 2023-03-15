@@ -228,3 +228,44 @@ func getPluggedState() -> Bool {
 }
 
 
+func getTimestampText(timestamp_string: String) -> String {
+    let time = Date(timeIntervalSince1970: Double(timestamp_string) ?? 0.0)
+    let timestamp = (Int(timestamp_string) ?? 0) * 1000 // milliseconds
+    
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    let formatted_time = dateFormatter.string(from: time)
+    dateFormatter.dateFormat = "HH:mm"
+    let formatted_date_time = dateFormatter.string(from: time)
+    
+//    var year = post_date.getFullYear();
+//    var month = months[post_date.getMonth()];
+//    var date = post_date.getDate();
+    
+    let current_timestamp = Int(NSDate().timeIntervalSince1970) * 1000;
+    
+    let milliseconds_elapsed = current_timestamp - timestamp;
+    
+    let msPerMinute = 60 * 1000;
+    let msPerHour = msPerMinute * 60;
+    let msPerDay = msPerHour * 24;
+    
+    
+    if (milliseconds_elapsed < msPerMinute) {
+        return String(Int(round(Double(milliseconds_elapsed/1000)))) + " seconds ago";
+    }
+    
+    else if (milliseconds_elapsed < msPerHour) {
+        return String(Int(round(Double(milliseconds_elapsed/msPerMinute)))) + " minutes ago";
+    }
+    
+    else if (milliseconds_elapsed < msPerDay ) {
+        return "today at " + formatted_time;
+    }
+    
+    else {
+        return formatted_date_time;
+    }
+    
+}

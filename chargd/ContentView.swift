@@ -45,18 +45,16 @@ struct ContentView: View {
                         VStack{
                             Divider()
 
-                            Text(feed[feedItem]?.timestamp ?? "")
+                            Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? ""))
                            
                             Group {
                                 Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
                             }
                             Text((feed[feedItem]?.battery ?? "") + "%")
                                 .font(.title)
-//
                             Text(feed[feedItem]?.caption ?? "")
                             
                             
-//                            Text(feedItem)
                         }
                         
 
