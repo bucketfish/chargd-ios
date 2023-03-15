@@ -2,7 +2,6 @@
 //  ContentView.swift
 //  chargd
 //
-//  Created by Tongyu Jiang on 13/3/23.
 //
 
 import SwiftUI
@@ -40,8 +39,16 @@ struct ContentView: View {
                         if let fetchedData = results {
                             // update feed with new data
                             feed = fetchedData
-                            feed_list = Array(feed.keys)
-                            // TODO: sort feed here
+                            
+                            // sort the data by time posted (this code is messed up as hell)
+                            feed_list = Array(feed.keys).sorted {
+                                
+                                let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
+                                let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
+                                
+                                return first_timestamp ?? 0 > second_timestamp ?? 0
+                                
+                            }
                         }
                     }
                     

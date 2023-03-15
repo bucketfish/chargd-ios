@@ -249,11 +249,11 @@ func getTimestampText(timestamp_string: String) -> String {
     
     if (milliseconds_elapsed < msPerMinute) {
         // TODO: singular form
-        return String(Int(round(Double(milliseconds_elapsed/1000)))) + " seconds ago";
+        return String(milliseconds_elapsed/1000) + " seconds ago";
     }
     
     else if (milliseconds_elapsed < msPerHour) {
-        return String(Int(round(Double(milliseconds_elapsed/msPerMinute)))) + " minutes ago";
+        return String(milliseconds_elapsed/msPerMinute) + " minutes ago";
     }
     
     else if (milliseconds_elapsed < msPerDay ) {

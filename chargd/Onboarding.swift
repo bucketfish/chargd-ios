@@ -2,7 +2,6 @@
 //  ContentView.swift
 //  chargd
 //
-//  Created by Tongyu Jiang on 13/3/23.
 //
 
 import SwiftUI

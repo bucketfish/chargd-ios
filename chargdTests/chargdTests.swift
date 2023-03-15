@@ -2,7 +2,6 @@
 //  chargdTests.swift
 //  chargdTests
 //
-//  Created by Tongyu Jiang on 13/3/23.
 //
 
 import XCTest
