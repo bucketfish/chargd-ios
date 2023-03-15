@@ -5,11 +5,9 @@
 
 import SwiftUI
 
-var inForeground = true
-//var feed: [String: User] = [:]
+var inForeground = true // i'm sure there's a better way to do this too
 
 // MARK: main
-
 @main
 struct chargdApp: App {
     
@@ -20,9 +18,7 @@ struct chargdApp: App {
 
     init() {
         UIDevice.current.isBatteryMonitoringEnabled = true
-        print("yas")
         inForeground = true
-    
     }
     
     var body: some Scene {
@@ -38,6 +34,7 @@ struct chargdApp: App {
             }
         }
         .onChange(of: scenePhase) { phase in
+            // i'm sure there's a better way to do this
                     switch phase {
                     case .background:
                         inForeground = false
@@ -66,26 +63,30 @@ func sendCaptionNotif(is_plugin: Bool){
     content.title = "You just plugged \(is_plugin ? "in" : "out") your phone!"
     content.body = "Post a caption?"
     
+    // enable captioning in the app
     UserDefaults.standard.set(true, forKey: "canCaption")
 
     // create the notification request
     let request = UNNotificationRequest(identifier: "postCaption", content: content, trigger: nil)
 
-    // add our notification request
+    // send the notification request
     UNUserNotificationCenter.current().add(request)
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        
+        // after 10 seconds, turn it off. they must be fast!
         let center = UNUserNotificationCenter.current()
         center.removeDeliveredNotifications(withIdentifiers: ["postCaption"])
         
+        // if the user didn't open the app before 10 seconds passed, they can't caption anymore
         if (inForeground == false) {
             UserDefaults.standard.set(false, forKey: "canCaption")
         }
-
     }
 }
 
 
+// request notification perms (to send notifications)
 func requestNotifPerms(){
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
         if success {
@@ -99,7 +100,7 @@ func requestNotifPerms(){
 // MARK: api get calls
 
 
-struct User: Decodable {
+struct User: Decodable { // TODO: move this into another file???
     let battery: String
     let is_plugin: String
     let timestamp: String
@@ -108,6 +109,7 @@ struct User: Decodable {
 
 
 func apiGET(completion: @escaping ([String: User]?) -> Void) {
+    // i don't even know anymore. this works. don't touch it or i die
     let url = URL(string:"https://chargd.bucketfish.me/battery")!
     
     URLSession.shared.dataTask(with: url){
@@ -126,15 +128,13 @@ func apiGET(completion: @escaping ([String: User]?) -> Void) {
             }
         }
     }.resume()
-    
-
 }
 
 
 
 // MARK: api post calls
 
-//
+// TODO: change username/delete user
 //func deleteOldUsername(_: oldUsername) {
 //
 //}
@@ -161,7 +161,6 @@ func postUpdate() {
     
     let battery_level = (UIDevice.current.batteryLevel) * 100
     let is_plugin = getPluggedState()
-        
     
     let parameters: NSDictionary = [
         "username": username,
@@ -239,10 +238,6 @@ func getTimestampText(timestamp_string: String) -> String {
     dateFormatter.dateFormat = "HH:mm"
     let formatted_date_time = dateFormatter.string(from: time)
     
-//    var year = post_date.getFullYear();
-//    var month = months[post_date.getMonth()];
-//    var date = post_date.getDate();
-    
     let current_timestamp = Int(NSDate().timeIntervalSince1970) * 1000;
     
     let milliseconds_elapsed = current_timestamp - timestamp;
@@ -253,6 +248,7 @@ func getTimestampText(timestamp_string: String) -> String {
     
     
     if (milliseconds_elapsed < msPerMinute) {
+        // TODO: singular form
         return String(Int(round(Double(milliseconds_elapsed/1000)))) + " seconds ago";
     }
     
@@ -261,6 +257,7 @@ func getTimestampText(timestamp_string: String) -> String {
     }
     
     else if (milliseconds_elapsed < msPerDay ) {
+        // TODO: what if it's "yesterday"
         return "today at " + formatted_time;
     }
     

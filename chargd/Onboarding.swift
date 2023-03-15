@@ -11,6 +11,13 @@ import SwiftUI
 
 struct Onboarding: View {
     
+    // the onboarding view.
+    /* todo:
+     - idk auth and login and all
+     - teach user how to set up shortcut
+     - request notif perms here instead of using a button in contentview
+     */
+    
     @State private var register_username: String = ""
     
     var body: some View {
@@ -23,8 +30,8 @@ struct Onboarding: View {
                 
                 
                 TextField(
-                "What's your username?",
-                text: $register_username)
+                    "What's your username?",
+                    text: $register_username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding([.leading, .trailing, .top], 50)
                 .multilineTextAlignment(.center)
@@ -35,24 +42,9 @@ struct Onboarding: View {
                 
                 Button("Done!") {
                     UserDefaults.standard.set(register_username, forKey: "username")
-
-                    print(register_username)
-                }
-                
-                
-            
+                }  
             }
-            
-//            VStack (){
-//                Button("ok whatever let's go") {
-//                    postUpdate()
-//                }
-//            }.frame(
-//                maxWidth: .infinity,
-//                maxHeight: .infinity,
-//                alignment: .bottom)
         }
-        
     }
 }
 

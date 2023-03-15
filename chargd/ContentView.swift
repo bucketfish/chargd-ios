@@ -13,70 +13,75 @@ let defaults = UserDefaults.standard
 
 struct ContentView: View {
     
+    // get username from appstorage
     @AppStorage("username") var username = "Anonymous"
-    @State var update_feed = true
+    
+    // update the feed
     @State var feed: [String: User]
     @State var feed_list: [String] = []
     
     var body: some View {
-        
         ZStack{
+            
+            // MARK: main feed
             VStack (spacing: 20) {
             
+                // greeting
                 Group {
                     Text("hello, ") + Text(username).bold()
                 }
                 .font(.largeTitle)
                 .multilineTextAlignment(.center)
                 
+                // refresh feed
                 Button("refresh feed") {
                     apiGET { results in
+                        
                         if let fetchedData = results {
+                            // update feed with new data
                             feed = fetchedData
                             feed_list = Array(feed.keys)
-                            print(feed_list)
+                            // TODO: sort feed here
                         }
                     }
+                    
                 }
                 
+                // show the feed
                 VStack (spacing: 20){
                     ForEach(feed_list, id: \.self) {feedItem in
+                        
                         
                         VStack{
                             Divider()
 
+                            // TODO: format this nicer i guess
                             Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? ""))
-                           
                             Group {
+                                // TODO: changed 'plugged out' to 'unplugged'
                                 Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
                             }
                             Text((feed[feedItem]?.battery ?? "") + "%")
                                 .font(.title)
                             Text(feed[feedItem]?.caption ?? "")
-                            
-                            
                         }
-                        
-
                     }
                 }
+                
+            } // end of main feed
             
-            }
-            
+            // MARK: debugging buttons
             VStack (){
                 Button("request notif perms") {
                     requestNotifPerms()
                 }
-                
-
             }.frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .bottom)
         }
-        .padding([.leading, .trailing])
+        .padding([.leading, .trailing]) // padding around the entire zstack
         
-       
     }
 }
 

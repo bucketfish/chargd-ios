@@ -16,7 +16,9 @@ struct Caption: View {
     
     var body: some View {
         
-        ZStack {
+        ZStack { // there's no reason for there to be a zstack here (yet)
+            
+            // MARK: captioning textfield
             VStack{
                 Text("Just plugged \(is_plugin ? "in" : "out")!")
                     .font(.title)
@@ -28,18 +30,16 @@ struct Caption: View {
                 .multilineTextAlignment(.center)
                 
                 Button(posted ? "Posted!!" : "Post") {
-                    
                     if (!posted) {
                         postCaption(caption: caption)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             UserDefaults.standard.set(false, forKey: "canCaption")
+                            // go back to the main page after 1 second
                         }
                     }
                     posted = true
-
+                    
                 }
-                
-                
             }
             
             
@@ -47,9 +47,10 @@ struct Caption: View {
         }.padding([.leading, .trailing])
             .onAppear {
                 is_plugin = getPluggedState()
+                // i love .onappear
             }
         
-       
+        
         
     }
 }
