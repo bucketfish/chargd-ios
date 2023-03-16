@@ -57,7 +57,7 @@ struct ContentView: View {
                             .foregroundColor(Color("ShinyPurple"))
                         
                         if let feed_text = feed[feedItem]?.caption {
-                            if feed_text != "" {
+                            if feed_text != "" && feed_text != " " {
                                 Text(feed_text)
                             }
                         }
@@ -71,8 +71,7 @@ struct ContentView: View {
                                 .foregroundColor(Color("PastelGreen"))
                             Spacer()
                         }
-                        .padding(.top, -10)
-                        .padding(.bottom, -15)
+                        .padding([.top, .bottom], -10)
                         
                     }.listRowSeparator(.hidden)
                     
