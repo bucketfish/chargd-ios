@@ -26,7 +26,7 @@ struct ContentView: View {
             
             
             List{
-                // MARK: main feed
+                // MARK: logo
                 
                 
                 HStack {
@@ -44,10 +44,10 @@ struct ContentView: View {
                 }
                 .listRowSeparator(.hidden)
                 
+                // MARK: feed items
                 ForEach(feed_list, id: \.self) { feedItem in
                     
                     VStack (alignment: .leading, spacing: 10){
-                        // TODO: format this nicer i guess
                         
                         Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? "", use_12h_clock: use_12h_clock)).foregroundColor(.gray)
                         Text(feedItem).bold() + Text(" ") + Text((feed[feedItem]?.is_plugin == "true") ? "plugged in" : "unplugged").foregroundColor(.gray) + Text(" their phone.").foregroundColor(.gray)
@@ -73,31 +73,28 @@ struct ContentView: View {
                     
                 } // end of main feed
             }
-            .listStyle(PlainListStyle())
-            .toolbar {
-                ToolbarItem (placement: ToolbarItemPlacement.navigationBarLeading) {
-                    Button (action: {
+            // MARK: refresh
+            .refreshable {
+                apiGET { results in
+                    if let fetchedData = results {
+                        // update feed with new data
+                        feed = fetchedData
                         
-                        apiGET { results in
-                            if let fetchedData = results {
-                                // update feed with new data
-                                feed = fetchedData
-                                
-                                // sort the data by time posted
-                                feed_list = Array(feed.keys).sorted {
-                                    
-                                    let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
-                                    let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
-                                    
-                                    return first_timestamp ?? 0 > second_timestamp ?? 0
-                                }
-                            }
+                        // sort the data by time posted
+                        feed_list = Array(feed.keys).sorted {
+                            
+                            let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
+                            let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
+                            
+                            return first_timestamp ?? 0 > second_timestamp ?? 0
                         }
-                    }){
-                        Image(systemName:"arrow.clockwise" )
                     }
-                    
                 }
+            }
+            .listStyle(PlainListStyle())
+            
+            // MARK: toolbar
+            .toolbar {
                 ToolbarItem {
                     NavigationLink {
                         FriendsView()
@@ -112,9 +109,10 @@ struct ContentView: View {
                         Image(systemName: "gear")
                     }
                 }
-
+                
             }
         }.onAppear {
+            // MARK: onappear
             apiGET { results in
                 if let fetchedData = results {
                     // update feed with new data
