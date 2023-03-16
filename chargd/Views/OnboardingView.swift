@@ -23,8 +23,19 @@ struct Onboarding: View {
         
         ZStack{
             VStack {
-                Text("Welcome to Chargd.")
-                    .font(.largeTitle)
+                HStack {
+                    Spacer()
+                    Text("chargd")
+                        .font(Font.system(size: 64, weight: .bold))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [Color("ShinyPurple"), Color("ShinyBlue"), Color("ShinyGreen")],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                    Spacer()
+                }
                 Text("A new way to see your friends (??)")
                 
                 

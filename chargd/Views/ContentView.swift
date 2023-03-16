@@ -15,7 +15,7 @@ struct ContentView: View {
     // get username from appstorage
     @AppStorage("username") var username = "Anonymous"
     @AppStorage("use_12h_clock") var use_12h_clock = true
-
+    
     
     // update the feed
     @State var feed: [String: User]
@@ -24,75 +24,112 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             
-        
-        ZStack{
             
-            // MARK: main feed
-            VStack (spacing: 20) {
-            
-                // greeting
-                Group {
-                    Text("hello, ") + Text(username).bold()
-                }
-                .font(.largeTitle)
-                .multilineTextAlignment(.center)
+            List{
+                // MARK: main feed
                 
-                // refresh feed
-                Button("refresh feed") {
-                    apiGET { results in
-                        if let fetchedData = results {
-                            // update feed with new data
-                            feed = fetchedData
-                            
-                            // sort the data by time posted (this code is messed up as hell)
-                            feed_list = Array(feed.keys).sorted {
-                                
-                                let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
-                                let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
-                                
-                                return first_timestamp ?? 0 > second_timestamp ?? 0
-                            }
-                        }
-                    }
-                }
                 
-                // show the feed
-                VStack (spacing: 20){
-                    ForEach(feed_list, id: \.self) {feedItem in
+                HStack {
+                    Spacer()
+                    Text("chargd")
+                        .font(Font.system(size: 64, weight: .bold))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [Color("ShinyPurple"), Color("ShinyBlue"), Color("ShinyGreen")],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                    Spacer()
+                }
+                .listRowSeparator(.hidden)
+                
+                ForEach(feed_list, id: \.self) { feedItem in
+                    
+                    VStack (alignment: .leading, spacing: 10){
+                        // TODO: format this nicer i guess
                         
-                        VStack{
-                            Divider()
-
-                            // TODO: format this nicer i guess
-                            Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? "", use_12h_clock: use_12h_clock))
-                            Group {
-                                Text(feedItem).bold() + Text(" ") + Text((feed[feedItem]?.is_plugin == "true") ? "plugged in" : "unplugged") + Text(" their phone.")
+                        Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? "", use_12h_clock: use_12h_clock)).foregroundColor(.gray)
+                        Text(feedItem).bold() + Text(" ") + Text((feed[feedItem]?.is_plugin == "true") ? "plugged in" : "unplugged").foregroundColor(.gray) + Text(" their phone.").foregroundColor(.gray)
+                        Text((feed[feedItem]?.battery ?? "") + "%")
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(Color("ShinyPurple"))
+                        
+                        Text(feed[feedItem]?.caption ?? "")
+                        
+                        HStack {
+                            Spacer()
+                            Image(systemName: "bolt")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 32.0)
+                                .foregroundColor(Color("PastelGreen"))
+                            Spacer()
+                        }.padding([.top, .bottom], -10)
+                        
+                    }.listRowSeparator(.hidden)
+                    
+                    
+                } // end of main feed
+            }
+            .listStyle(PlainListStyle())
+            .toolbar {
+                ToolbarItem (placement: ToolbarItemPlacement.navigationBarLeading) {
+                    Button (action: {
+                        
+                        apiGET { results in
+                            if let fetchedData = results {
+                                // update feed with new data
+                                feed = fetchedData
+                                
+                                // sort the data by time posted
+                                feed_list = Array(feed.keys).sorted {
+                                    
+                                    let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
+                                    let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
+                                    
+                                    return first_timestamp ?? 0 > second_timestamp ?? 0
+                                }
                             }
-                            Text((feed[feedItem]?.battery ?? "") + "%")
-                                .font(.title)
-                            Text(feed[feedItem]?.caption ?? "")
                         }
+                    }){
+                        Image(systemName:"arrow.clockwise" )
+                    }
+                    
+                }
+                ToolbarItem {
+                    NavigationLink {
+                        FriendsView()
+                    } label: {
+                        Image(systemName: "person.2.circle")
                     }
                 }
-            } // end of main feed
-        }
-        .padding([.leading, .trailing]) // padding around the entire zstack
-        .toolbar {
-            ToolbarItem {
-                NavigationLink {
-                    FriendsView()
-                } label: {
-                    Image(systemName: "person.2.circle")
+                ToolbarItem {
+                    NavigationLink {
+                        Settings()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+
+            }
+        }.onAppear {
+            apiGET { results in
+                if let fetchedData = results {
+                    // update feed with new data
+                    feed = fetchedData
+                    
+                    // sort the data by time posted
+                    feed_list = Array(feed.keys).sorted {
+                        
+                        let first_timestamp = Int(feed[$0]?.timestamp ?? "0")
+                        let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
+                        
+                        return first_timestamp ?? 0 > second_timestamp ?? 0
+                    }
                 }
             }
-            ToolbarItem {
-                NavigationLink {
-                    Settings()
-                } label: {
-                    Image(systemName: "gear")
-                }
-            }
-        }
         }
         
     }
@@ -103,3 +140,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1672531200", caption: "test caption")], feed_list: ["bucketfish"])
     }
 }
+

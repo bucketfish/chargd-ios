@@ -17,13 +17,18 @@ struct Settings: View {
         NavigationStack {
             List {
                 Section {
+                    Group {
+                        Text("hello, ") + Text(username).bold() + Text("!")
+                    }
+                    .font(.largeTitle)
+                    .multilineTextAlignment(.center)
+                    
                     Toggle(isOn: $use_12h_clock) {
                         Text("Use 12h clock")
                     }.onSubmit {
                         UserDefaults.standard.set(use_12h_clock, forKey: "use_12h_clock")
                     }
-                }
-                Section {
+                    
                     Button("Request notification permissions") {
                         requestNotifPerms()
                     }
