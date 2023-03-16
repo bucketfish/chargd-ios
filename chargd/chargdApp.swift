@@ -102,7 +102,7 @@ func requestNotifPerms(){
 
 func apiGET(completion: @escaping ([String: User]?) -> Void) {
     // i don't even know anymore. this works. don't touch it or i die
-    let url = URL(string:"https://chargd.bucketfish.me/battery")!
+    let url = URL(string:"https://api.chargd.social/battery")!
     
     URLSession.shared.dataTask(with: url){
         data, response, error in
@@ -140,7 +140,7 @@ func postCaption(caption: String){
         "caption": caption
     ]
     
-    let url_string = "https://chargd.bucketfish.me/caption"
+    let url_string = "https://api.chargd.social/caption"
     
     apiPOST(parameters: parameters, url_string: url_string)
     
@@ -161,7 +161,7 @@ func postUpdate() {
         "timestamp": String(currentTime)
     ]
     
-    let url_string = "https://chargd.bucketfish.me/battery"
+    let url_string = "https://api.chargd.social/battery"
     
     apiPOST(parameters: parameters, url_string: url_string)
 }
