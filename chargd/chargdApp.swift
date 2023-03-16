@@ -3,7 +3,9 @@
 //  chargd
 //
 
+import Foundation
 import SwiftUI
+//import NSCalendar
 
 var inForeground = true // i'm sure there's a better way to do this too
 
@@ -216,28 +218,40 @@ func getPluggedState() -> Bool {
 }
 
 
-func getTimestampText(timestamp_string: String) -> String {
+func getTimestampText(timestamp_string: String, use_12h_clock: Bool = false) -> String {
+
     let time = Date(timeIntervalSince1970: Double(timestamp_string) ?? 0.0)
     let timestamp = (Int(timestamp_string) ?? 0) * 1000 // milliseconds
     
+    let calendar = Calendar.current
+    
     
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm"
+    if (use_12h_clock) {
+        dateFormatter.dateFormat = "h:mma"
+    } else {
+        dateFormatter.dateFormat = "HH:mm"
+
+    }
     let formatted_time = dateFormatter.string(from: time)
-    dateFormatter.dateFormat = "HH:mm"
+    
+    if (use_12h_clock) {
+        dateFormatter.dateFormat = "MMM d, h:mma"
+    } else{
+        dateFormatter.dateFormat = "MMM d, HH:mm"
+    }
+    
     let formatted_date_time = dateFormatter.string(from: time)
     
     let current_timestamp = Int(NSDate().timeIntervalSince1970) * 1000;
     
     let milliseconds_elapsed = current_timestamp - timestamp;
-    
     let msPerMinute = 60 * 1000;
     let msPerHour = msPerMinute * 60;
     let msPerDay = msPerHour * 24;
     
     
     if (milliseconds_elapsed < msPerMinute) {
-        // TODO: singular form
         let time_num = String(milliseconds_elapsed/1000)
         if (time_num == "1"){
             return time_num + " second ago"
@@ -254,8 +268,15 @@ func getTimestampText(timestamp_string: String) -> String {
     }
     
     else if (milliseconds_elapsed < msPerDay ) {
+        
+        if (calendar.isDateInToday(time)) {
+            return "today at " + formatted_time;
+        }
+        else {
+            return "yesterday at " + formatted_time;
+        }
         // TODO: what if it's "yesterday"
-        return "today at " + formatted_time;
+        
     }
     
     else {

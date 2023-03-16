@@ -14,12 +14,17 @@ struct ContentView: View {
     
     // get username from appstorage
     @AppStorage("username") var username = "Anonymous"
+    @AppStorage("use_12h_clock") var use_12h_clock = true
+
     
     // update the feed
     @State var feed: [String: User]
     @State var feed_list: [String] = []
     
     var body: some View {
+        NavigationStack {
+            
+        
         ZStack{
             
             // MARK: main feed
@@ -63,7 +68,7 @@ struct ContentView: View {
                             Divider()
 
                             // TODO: format this nicer i guess
-                            Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? ""))
+                            Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? "", use_12h_clock: use_12h_clock))
 //                            Group {
 //                                // TODO: changed 'plugged out' to 'unplugged'
 //                                Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
@@ -88,12 +93,23 @@ struct ContentView: View {
                 alignment: .bottom)
         }
         .padding([.leading, .trailing]) // padding around the entire zstack
+        .toolbar {
+            ToolbarItem {
+                NavigationLink {
+                    Settings()
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.title)
+                }
+            }
+        }
+        }
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1234", caption: "test caption")], feed_list: ["bucketfish"])
+        ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1672531200", caption: "test caption")], feed_list: ["bucketfish"])
     }
 }
