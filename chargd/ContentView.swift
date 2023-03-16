@@ -64,13 +64,13 @@ struct ContentView: View {
 
                             // TODO: format this nicer i guess
                             Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? ""))
-                            Group {
-                                // TODO: changed 'plugged out' to 'unplugged'
-                                Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
-                            }
-                            Text((feed[feedItem]?.battery ?? "") + "%")
-                                .font(.title)
-                            Text(feed[feedItem]?.caption ?? "")
+//                            Group {
+//                                // TODO: changed 'plugged out' to 'unplugged'
+//                                Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
+//                            }
+//                            Text((feed[feedItem]?.battery ?? "") + "%")
+//                                .font(.title)
+//                            Text(feed[feedItem]?.caption ?? "")
                         }
                     }
                 }
@@ -94,6 +94,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1234", caption: "test caption")])
+        ContentView(feed: ["bucketfish": User(battery: "90", is_plugin: "true", timestamp: "1234", caption: "test caption")], feed_list: ["bucketfish"])
     }
 }

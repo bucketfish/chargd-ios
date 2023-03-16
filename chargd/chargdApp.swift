@@ -56,7 +56,6 @@ struct chargdApp: App {
 
 
 // MARK: notifs
-
 func sendCaptionNotif(is_plugin: Bool){
     let content = UNMutableNotificationContent()
     
@@ -98,15 +97,6 @@ func requestNotifPerms(){
 }
 
 // MARK: api get calls
-
-
-struct User: Decodable { // TODO: move this into another file???
-    let battery: String
-    let is_plugin: String
-    let timestamp: String
-    let caption: String
-}
-
 
 func apiGET(completion: @escaping ([String: User]?) -> Void) {
     // i don't even know anymore. this works. don't touch it or i die
@@ -212,15 +202,14 @@ func apiPOST(parameters: NSDictionary, url_string: String) {
 func getPluggedState() -> Bool {
     let plugged_state = UIDevice.current.batteryState
     var is_plugin = true
+    print(plugged_state)
     
     switch plugged_state {
-        case UIDevice.BatteryState.charging:
-            is_plugin = true
-        case UIDevice.BatteryState.full:
-            is_plugin = true
+        case UIDevice.BatteryState.unplugged:
+            is_plugin = false
     
         default:
-            is_plugin = false
+            is_plugin = true
     }
         
     return is_plugin
@@ -249,11 +238,19 @@ func getTimestampText(timestamp_string: String) -> String {
     
     if (milliseconds_elapsed < msPerMinute) {
         // TODO: singular form
-        return String(milliseconds_elapsed/1000) + " seconds ago";
+        let time_num = String(milliseconds_elapsed/1000)
+        if (time_num == "1"){
+            return time_num + " second ago"
+        }
+        return time_num + " seconds ago";
     }
     
     else if (milliseconds_elapsed < msPerHour) {
-        return String(milliseconds_elapsed/msPerMinute) + " minutes ago";
+        let time_num = String(milliseconds_elapsed/msPerMinute)
+        if (time_num == "1"){
+            return time_num + "minute ago";
+        }
+        return time_num + " minutes ago";
     }
     
     else if (milliseconds_elapsed < msPerDay ) {
