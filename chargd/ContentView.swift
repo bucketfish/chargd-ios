@@ -69,28 +69,18 @@ struct ContentView: View {
 
                             // TODO: format this nicer i guess
                             Text(getTimestampText(timestamp_string: feed[feedItem]?.timestamp ?? "", use_12h_clock: use_12h_clock))
-//                            Group {
-//                                // TODO: changed 'plugged out' to 'unplugged'
-//                                Text(feedItem).bold() + Text(" plugged their phone ") + Text((feed[feedItem]?.is_plugin == "true") ? "in" : "out") + Text(".")
-//                            }
-//                            Text((feed[feedItem]?.battery ?? "") + "%")
-//                                .font(.title)
-//                            Text(feed[feedItem]?.caption ?? "")
+                            Group {
+                                Text(feedItem).bold() + Text(" ") + Text((feed[feedItem]?.is_plugin == "true") ? "plugged in" : "unplugged") + Text(" their phone.")
+                            }
+                            Text((feed[feedItem]?.battery ?? "") + "%")
+                                .font(.title)
+                            Text(feed[feedItem]?.caption ?? "")
                         }
                     }
                 }
                 
             } // end of main feed
             
-            // MARK: debugging buttons
-            VStack (){
-                Button("request notif perms") {
-                    requestNotifPerms()
-                }
-            }.frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .bottom)
         }
         .padding([.leading, .trailing]) // padding around the entire zstack
         .toolbar {

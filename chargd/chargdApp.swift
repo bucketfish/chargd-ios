@@ -61,7 +61,7 @@ struct chargdApp: App {
 func sendCaptionNotif(is_plugin: Bool){
     let content = UNMutableNotificationContent()
     
-    content.title = "You just plugged \(is_plugin ? "in" : "out") your phone!"
+    content.title = "You just \(is_plugin ? "plugged in" : "unplugged") your phone!"
     content.body = "Post a caption?"
     
     // enable captioning in the app

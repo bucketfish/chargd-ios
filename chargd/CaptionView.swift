@@ -20,7 +20,7 @@ struct Caption: View {
             
             // MARK: captioning textfield
             VStack{
-                Text("Just plugged \(is_plugin ? "in" : "out")!")
+                Text("Just \(is_plugin ? "plugged in" : "unplugged")!")
                     .font(.title)
                 
                 TextField(

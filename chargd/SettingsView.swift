@@ -23,6 +23,11 @@ struct Settings: View {
                         UserDefaults.standard.set(use_12h_clock, forKey: "use_12h_clock")
                     }
                 }
+                Section {
+                    Button("Request notification permissions") {
+                        requestNotifPerms()
+                    }
+                }
             }.navigationTitle("Settings")
         }
         
