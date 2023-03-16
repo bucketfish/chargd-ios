@@ -83,7 +83,6 @@ struct ContentView: View {
                     FriendsView()
                 } label: {
                     Image(systemName: "person.2.circle")
-                        .font(.title)
                 }
             }
             ToolbarItem {
@@ -91,7 +90,6 @@ struct ContentView: View {
                     Settings()
                 } label: {
                     Image(systemName: "gear")
-                        .font(.title)
                 }
             }
         }

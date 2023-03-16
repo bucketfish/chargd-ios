@@ -262,7 +262,7 @@ func getTimestampText(timestamp_string: String, use_12h_clock: Bool = false) -> 
     else if (milliseconds_elapsed < msPerHour) {
         let time_num = String(milliseconds_elapsed/msPerMinute)
         if (time_num == "1"){
-            return time_num + "minute ago";
+            return time_num + " minute ago";
         }
         return time_num + " minutes ago";
     }
@@ -275,7 +275,6 @@ func getTimestampText(timestamp_string: String, use_12h_clock: Bool = false) -> 
         else {
             return "yesterday at " + formatted_time;
         }
-        // TODO: what if it's "yesterday"
         
     }
     
