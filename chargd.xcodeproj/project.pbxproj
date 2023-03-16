@@ -17,6 +17,7 @@
 		4C12E30129BF233800DCD144 /* chargdIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C12E30029BF233800DCD144 /* chargdIntents.swift */; };
 		4C1CEEB929C293A300ECCCD2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CEEB829C293A300ECCCD2 /* User.swift */; };
 		4C1CEEBB29C294C100ECCCD2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CEEBA29C294C100ECCCD2 /* SettingsView.swift */; };
+		4C1CEEBD29C2AAF500ECCCD2 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CEEBC29C2AAF500ECCCD2 /* FriendsView.swift */; };
 		4C1E926529C07F9C00CDEFC6 /* CaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E926429C07F9C00CDEFC6 /* CaptionView.swift */; };
 		4C67097A29BF3F2C00056C70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C67097929BF3F2C00056C70 /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,7 @@
 		4C12E30029BF233800DCD144 /* chargdIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chargdIntents.swift; sourceTree = "<group>"; };
 		4C1CEEB829C293A300ECCCD2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4C1CEEBA29C294C100ECCCD2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4C1CEEBC29C2AAF500ECCCD2 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		4C1E926429C07F9C00CDEFC6 /* CaptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionView.swift; sourceTree = "<group>"; };
 		4C67097929BF3F2C00056C70 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 				4C12E2DC29BF22CF00DCD144 /* Preview Content */,
 				4C12E30029BF233800DCD144 /* chargdIntents.swift */,
 				4C1CEEB829C293A300ECCCD2 /* User.swift */,
+				4C1CEEBC29C2AAF500ECCCD2 /* FriendsView.swift */,
 			);
 			path = chargd;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				4C12E30129BF233800DCD144 /* chargdIntents.swift in Sources */,
 				4C12E2D829BF22CE00DCD144 /* ContentView.swift in Sources */,
+				4C1CEEBD29C2AAF500ECCCD2 /* FriendsView.swift in Sources */,
 				4C1CEEB929C293A300ECCCD2 /* User.swift in Sources */,
 				4C67097A29BF3F2C00056C70 /* OnboardingView.swift in Sources */,
 				4C1CEEBB29C294C100ECCCD2 /* SettingsView.swift in Sources */,

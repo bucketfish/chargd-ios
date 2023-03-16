@@ -40,7 +40,6 @@ struct ContentView: View {
                 // refresh feed
                 Button("refresh feed") {
                     apiGET { results in
-                        
                         if let fetchedData = results {
                             // update feed with new data
                             feed = fetchedData
@@ -52,17 +51,14 @@ struct ContentView: View {
                                 let second_timestamp = Int(feed[$1]?.timestamp ?? "0")
                                 
                                 return first_timestamp ?? 0 > second_timestamp ?? 0
-                                
                             }
                         }
                     }
-                    
                 }
                 
                 // show the feed
                 VStack (spacing: 20){
                     ForEach(feed_list, id: \.self) {feedItem in
-                        
                         
                         VStack{
                             Divider()
@@ -78,12 +74,18 @@ struct ContentView: View {
                         }
                     }
                 }
-                
             } // end of main feed
-            
         }
         .padding([.leading, .trailing]) // padding around the entire zstack
         .toolbar {
+            ToolbarItem {
+                NavigationLink {
+                    FriendsView()
+                } label: {
+                    Image(systemName: "person.2.circle")
+                        .font(.title)
+                }
+            }
             ToolbarItem {
                 NavigationLink {
                     Settings()
