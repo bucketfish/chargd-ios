@@ -56,7 +56,11 @@ struct ContentView: View {
                             .bold()
                             .foregroundColor(Color("ShinyPurple"))
                         
-                        Text(feed[feedItem]?.caption ?? "")
+                        if let feed_text = feed[feedItem]?.caption {
+                            if feed_text != "" {
+                                Text(feed_text)
+                            }
+                        }
                         
                         HStack {
                             Spacer()
@@ -66,7 +70,9 @@ struct ContentView: View {
                                 .frame(height: 32.0)
                                 .foregroundColor(Color("PastelGreen"))
                             Spacer()
-                        }.padding([.top, .bottom], -10)
+                        }
+                        .padding(.top, -10)
+                        .padding(.bottom, -15)
                         
                     }.listRowSeparator(.hidden)
                     
