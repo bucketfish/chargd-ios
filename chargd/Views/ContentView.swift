@@ -31,15 +31,18 @@ struct ContentView: View {
                 
                 HStack {
                     Spacer()
-                    Text("chargd")
-                        .font(Font.system(size: 64, weight: .bold))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [Color("ShinyPurple"), Color("ShinyBlue"), Color("ShinyGreen")],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                    Image("LongLogo")
+                        .resizable()
+                        .scaledToFit()
+//                    Text("chargd")
+//                        .font(Font.system(size: 64, weight: .bold))
+//                        .foregroundStyle(
+//                            LinearGradient(
+//                                colors: [Color("ShinyPurple"), Color("ShinyBlue"), Color("ShinyGreen")],
+//                                startPoint: .leading,
+//                                endPoint: .trailing
+//                            )
+//                        )
                     Spacer()
                 }
                 .listRowSeparator(.hidden)
